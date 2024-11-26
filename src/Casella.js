@@ -6,7 +6,7 @@ function Casella({ id, day, isOpen, handleOpen }) {
   const today = myDate.getUTCDate();
   //const today = 4
 
-  const imgUrl = `./img/placeholder_${day}.jpg`;
+  const imgUrl = `./img/img_${day}.jpg`;
 
   return (
     <div
