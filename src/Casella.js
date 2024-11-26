@@ -3,8 +3,8 @@ import React from "react";
 
 function Casella({ id, day, isOpen, handleOpen }) {
   const myDate = new Date();
-  const today = myDate.getUTCDate();
-  //const today = 4
+  //const today = myDate.getUTCDate();
+  const today = 4
 
   const imgUrl = `./img/img_${day}.jpg`;
 
