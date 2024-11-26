@@ -1,24 +1,45 @@
-import logo from './logo.svg';
+// App.js
+import React, { useEffect } from 'react';
+import Dexie from 'dexie';
+import { useLiveQuery } from 'dexie-react-hooks';
 import './App.css';
+import Casella from './Casella';
+
+const db = new Dexie('calendarioAvvento');
+db.version(1).stores({
+  caselle: '++id, day, isOpen'
+});
 
 function App() {
+  const allCaselle = useLiveQuery(() => db.caselle.toArray());
+
+  useEffect(() => {
+    const initCaselle = async () => {
+      if (!allCaselle.length) {
+        const newCaselle = Array.from({ length: 24 }, (_, i) => ({ day: i + 1, isOpen: false }));
+        await db.caselle.bulkPut(newCaselle);
+      }
+    };
+    initCaselle();
+  }, [allCaselle]);
+
+  const handleOpen = async (id) => {
+    await db.caselle.update(id, { isOpen: true });
+  };
+
+  const bgUrl = "./img/deco.png";
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <main className='h-dvh w-screen flex flex-col charm-regular'>
+      <h1 className='text-center font-bold text-xl md:text-3xl w-full bg-center bg-cover' 
+      style={{ backgroundImage: `url(${bgUrl}`}}>
+      Calendario dell'Avvento 2024</h1>
+    <div className="h-full w-full p-2 grid grid-cols-4 md:grid-cols-6 gap-2">
+      {allCaselle?.map((casella) => (
+        <Casella key={casella.id} id={casella.id} day={casella.day} isOpen={casella.isOpen} handleOpen={handleOpen} />
+      ))}
     </div>
+      </main>
   );
 }
 
