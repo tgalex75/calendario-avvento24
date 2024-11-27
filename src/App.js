@@ -33,7 +33,7 @@ function App() {
     <main className='h-dvh w-screen flex flex-col charm-regular'>
       <h1 className='text-center font-bold text-3xl md:py-2 md:text-5xl w-full bg-center bg-cover' 
       style={{ backgroundImage: `url(${bgUrl}`}}>
-      Calendario dell'Avvento 2024</h1>
+      Calendario dell'Avvento degli Amichi</h1>
     <div className="h-full w-full p-2 grid grid-cols-4 md:grid-cols-6 gap-2">
       {allCaselle?.map((casella) => (
         <Casella key={casella.id} id={casella.id} day={casella.day} isOpen={casella.isOpen} handleOpen={handleOpen} />
